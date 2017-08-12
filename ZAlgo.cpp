@@ -8,8 +8,10 @@ int main()
 	{
 		// i is index of the array where we need to fill our value
 		//k is the index whose value is to be copied to index i
-		//L is the last value of i , where we checked and updated the array by checking character by character
-		// R is the last index of array ,till where we checked .. So we can now copy values from L to R provided that L+z[i]<R
+		//L is the beginning of the window,
+		// R is the last index of array ,till where we checked(End of a window) 
+		//So we can now copy values from L to R provided that L+z[i]<R because we only know the characters 
+		//till the End of the particular window(Till R).So if index exceeds R then we have to start a new window
 		string A,B;
 		cin>>A>>B;
 		int l1=A.length();
