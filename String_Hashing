@@ -1,0 +1,248 @@
+/*Subham Sanghai*/
+#include<bits/stdc++.h>
+#define mod1 1000000007
+#define mod2 1000000009
+#define mod3 1000000021
+using namespace std;
+long long powers(long long a,long long b,long long mod)
+{
+	if(b==0)
+		return 1;
+	else if(b%2==0)
+	{
+		long long s=powers(a,b/2,mod)%mod;
+		return (s*s)%mod;
+	}
+	else
+		return (a*powers(a,(b-1),mod))%mod;
+}
+int   main()
+{
+	string s;
+	cin>>s;
+	long long l=s.length();
+	long long starthash1[l+1],starthash2[l+1],starthash3[l+1],endhash1[l+1],endhash2[l+1],endhash3[l+1];
+	long long val1,val2,val3,start1,start2,start3,end1,end2,end3,length=0;
+	starthash1[0]=(s[0]-96);
+	string suffix,prefix;
+	starthash2[0]=(s[0]-96);
+	starthash3[0]=(s[0]-96);
+	for(long long i=1;i<l;i++)
+	{
+		starthash1[i]=((starthash1[i-1]*96)%mod1+(s[i]-96))%mod1;
+		starthash2[i]=((starthash2[i-1]*96)%mod2+(s[i]-96))%mod2;
+		starthash3[i]=((starthash3[i-1]*96)%mod3+(s[i]-96))%mod3;
+	}
+	endhash1[l-1]=(s[l-1]-96);
+	endhash2[l-1]=(s[l-1]-96);
+	endhash3[l-1]=(s[l-1]-96);
+	for(long long i=l-2;i>=0;i--)
+	{
+		endhash1[i]=((endhash1[i+1]*96)%mod1+(s[i]-96))%mod1;
+		endhash2[i]=((endhash2[i+1]*96)%mod2+(s[i]-96))%mod2;
+		endhash3[i]=((endhash3[i+1]*96)%mod3+(s[i]-96))%mod3;
+	}
+      //  for(long long i=0;i<l;i++)
+       // cout<<starthash1[i]<<" "<<endhash1[i]<<"\n";
+	for(long long i=(l/2);i>=0;i--)
+	{
+			//with odd length
+			if((2*i)<l)
+			{
+			start1=starthash1[i];
+			start2=starthash2[i];
+			start3=starthash3[i];
+			val1=0;
+			val2=0;
+			val3=0;
+			if(((2*i)+1)<l)
+			{
+			val1=(endhash1[(2*i)+1]*powers(96,(i+1),mod1))%mod1;
+			val2=(endhash2[(2*i)+1]*powers(96,(i+1),mod2))%mod2;
+			val3=(endhash3[(2*i)+1]*powers(96,(i+1),mod3))%mod3;
+			}
+			end1=(endhash1[i]-val1+mod1)%mod1;
+			end2=(endhash2[i]-val2+mod2)%mod2;
+			end3=(endhash3[i]-val3+mod3)%mod3;
+			if(start1==end1 && start2==end2 && start3==end3)
+			{
+				length=(2*i)+1;
+			}
+			//cout<<i<<" length1 "<<length<<"\n";
+			}
+			//With even length
+			if((2*(i+1))<=l)
+			{
+				start1=starthash1[i];
+			start2=starthash2[i];
+			start3=starthash3[i];
+			val1=0;
+			val2=0;
+			val3=0;
+			if((2*(i+1))<l)
+			{
+			val1=(endhash1[(2*(i+1))]*powers(96,(i+1),mod1))%mod1;
+			val2=(endhash2[(2*(i+1))]*powers(96,(i+1),mod2))%mod2;
+			val3=(endhash3[(2*(i+1))]*powers(96,(i+1),mod3))%mod3;
+			}
+			end1=(endhash1[i+1]-val1+mod1)%mod1;
+			end2=(endhash2[i+1]-val2+mod2)%mod2;
+			end3=(endhash3[i+1]-val3+mod3)%mod3;
+
+			if(start1==end1 && start2==end2 && start3==end3)
+			{
+				length=max(length,(2*(i+1)));
+				//cout<<i<<" length2 "<<length<<"\n";
+			}
+			}
+			if(length!=0)
+			{
+				prefix=s.substr(0,length);
+				break;
+			}
+
+
+	}
+	length=0;
+	string s2;
+	s2=s;
+	reverse(s2.begin(),s2.end());
+	 l=s2.length();
+	starthash1[0]=(s2[0]-96);
+	starthash2[0]=(s2[0]-96);
+	starthash3[0]=(s2[0]-96);
+	for(long long i=1;i<l;i++)
+	{
+		starthash1[i]=((starthash1[i-1]*96)%mod1+(s2[i]-96))%mod1;
+		starthash2[i]=((starthash2[i-1]*96)%mod2+(s2[i]-96))%mod2;
+		starthash3[i]=((starthash3[i-1]*96)%mod3+(s2[i]-96))%mod3;
+	}
+	endhash1[l-1]=(s2[l-1]-96);
+	endhash2[l-1]=(s2[l-1]-96);
+	endhash3[l-1]=(s2[l-1]-96);
+	for(long long i=l-2;i>=0;i--)
+	{
+		endhash1[i]=((endhash1[i+1]*96)%mod1+(s2[i]-96))%mod1;
+		endhash2[i]=((endhash2[i+1]*96)%mod2+(s2[i]-96))%mod2;
+		endhash3[i]=((endhash3[i+1]*96)%mod3+(s2[i]-96))%mod3;
+	}
+
+	for(long long i=(l/2);i>=0;i--)
+	{
+			//with odd length
+			if((2*i)<l)
+			{
+			start1=starthash1[i];
+			start2=starthash2[i];
+			start3=starthash3[i];
+			val1=0;
+			val2=0;
+			val3=0;
+			if(((2*i)+1)<l)
+			{
+			val1=(endhash1[(2*i)+1]*powers(96,(i+1),mod1))%mod1;
+			val2=(endhash2[(2*i)+1]*powers(96,(i+1),mod2))%mod2;
+			val3=(endhash3[(2*i)+1]*powers(96,(i+1),mod3))%mod3;
+			}
+			end1=(endhash1[i]-val1+mod1)%mod1;
+			end2=(endhash2[i]-val2+mod2)%mod2;
+			end3=(endhash3[i]-val3+mod3)%mod3;
+			if(start1==end1 && start2==end2 && start3==end3)
+			{
+				length=(2*i)+1;
+			}
+
+			}
+			//With even length
+			if((2*(i+1))<=l)
+			{
+				start1=starthash1[i];
+			start2=starthash2[i];
+			start3=starthash3[i];
+			val1=0;
+			val2=0;
+			val3=0;
+			if((2*(i+1))<l)
+			{
+			val1=(endhash1[(2*(i+1))]*powers(96,(i+1),mod1))%mod1;
+			val2=(endhash2[(2*(i+1))]*powers(96,(i+1),mod2))%mod2;
+			val3=(endhash3[(2*(i+1))]*powers(96,(i+1),mod3))%mod3;
+			}
+			end1=(endhash1[i+1]-val1+mod1)%mod1;
+			end2=(endhash2[i+1]-val2+mod2)%mod2;
+			end3=(endhash3[i+1]-val3+mod3)%mod3;
+
+			if(start1==end1 && start2==end2 && start3==end3)
+			{
+				length=max(length,(2*(i+1)));
+			}
+			}
+			if(length!=0)
+			{
+				suffix=s2.substr(0,length);
+				break;
+			}
+
+
+	}
+	string newstring=(suffix+prefix);
+	cout<<newstring<<"\n";
+string 	A=newstring+'$'+newstring;
+	long long l1=newstring.length();
+
+		long long n=A.length();
+		long long L = 0, R = 0;
+		long long z[n+1];
+		fill(z,z+n+1,0);
+		for (long long i = 1; i < n; i++)
+		{
+    		if (i > R)
+    		{
+        		L = R = i;
+       		 while (R < n && A[R-L] == A[R])
+        		{
+            		R++;
+        		}
+        		z[i] = R-L;
+        		R--;
+    		}
+    		else
+    		{
+        		long long k = i-L;
+        		if (z[k] < R-i+1)
+        		{
+            		z[i] = z[k];
+        		}
+        		else
+        		{
+            		L = i;
+            		while (R < n && A[R-L] == A[R])
+            		{
+                		R++;
+            		}
+            		z[i] = R-L;
+            		R--;
+      		 	 }
+    		}
+    	}
+    	long long count1[l1+2];
+    	fill(count1,count1+l1+2,0);
+    	for(long long i=l1+1;i<n;i++)
+    	{
+    	count1[z[i]]++;//if count[6]=1 then it means prefix of length 1,2,3 ... 6 all are present .so  if count1[6]=1 then count of all strings of length 1,2 .. 6 should be increased so we maintained a cum sum
+    	}
+    	long long sum[l1+2];
+    	sum[l1+1]=0;
+    	for(long long i=l1;i>=1;i--)
+    	{
+    	sum[i]=sum[i+1]+count1[i];
+    	}
+    	for(long long i=1;i<=l1;i++)
+    	{
+    	cout<<sum[i]<<" ";
+    	}
+    	cout<<"\n";
+    	}
+
+
+
