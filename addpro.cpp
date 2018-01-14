@@ -7,5 +7,5 @@ int a=5;
 int b=2;
 int s;
 s=(a+b);
-cout<<s;
+cout<<s; //Added comment just to check if merge conflict occurs
 }
